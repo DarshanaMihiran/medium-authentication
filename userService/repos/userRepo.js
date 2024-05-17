@@ -73,7 +73,7 @@ class userRepo {
             if (!isPasswordValid) throw new InvalidCredentialsException("Invalid credentials");
             
             const uid = loginData.username;
-            const jwtUser = {uid: uid};
+            const jwtUser = {uid: uid, roles: user.roles};
             const accessToken = this.mintAccessToken(jwtUser);
             const refreshToken = this.mintRefreshToken ((jwtUser));
             //insert refresh token to the database
@@ -103,7 +103,7 @@ class userRepo {
 
         try {
             const user = await verifyToken(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-            const accessToken = this.mintAccessToken({ uid: user.uid });
+            const accessToken = this.mintAccessToken({ uid: user.uid, roles: user.roles});
             console.log(accessToken);
             return accessToken;
         } catch (error) {

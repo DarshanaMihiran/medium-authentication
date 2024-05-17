@@ -23,6 +23,10 @@ const userSchema = new Schema(
             required: true,
             minLength: 5,
         },
+        roles: {
+            type: Array,
+            required: true
+        },
     }
 );
 

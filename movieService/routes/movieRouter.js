@@ -1,7 +1,7 @@
 const express = require('express');
 const movieController = require('../controllers/movieController');
 const { validateIdQuery, validateGetWithFiltersQuery } = require('../middlewares/inputValidationMiddleware');
-const { verifyToken } = require('../middlewares/TokenVerificationMiddleware');
+const { verifyToken, authorizeRoles } = require('../middlewares/TokenVerificationMiddleware');
 
 const router = express.Router();
 
@@ -42,7 +42,7 @@ const router = express.Router();
  *       200:
  *         description: A list of movies
  */
-router.get('/', verifyToken, movieController.get);
+router.get('/', verifyToken, authorizeRoles('admin', 'executive'), movieController.get);
 
 /**
  * @swagger

@@ -4,6 +4,7 @@ const users = [
     "firstname": "darshana",
     "lastname": "edirisinghe",
     "password": "sa123",
+    "roles": ["admin", "executive"]
   }
 ];
 
