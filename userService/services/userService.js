@@ -10,16 +10,23 @@ class userService {
     }
 
     async createUser(username, firstname, lastname, password) {
-        try {         
-            // Call the repository to create the movie
-            console.log(year);
-            const createdUser = await userRepo.create({
-                username, firstname, lastname, password
-            });
-            return createdUser;
-        } catch (error) {
-            throw new Error(`Error creating movie: ${error.message}`);
-        }
+        const createdUser = await userRepo.create({
+            username, firstname, lastname, password
+        });
+        return createdUser;
+    }
+
+    async login(username, password) {
+        const token = await userRepo.login({
+            username, password
+        });
+        return token;
+    }
+
+    async token(refreshToken) {
+        const tokens = await userRepo.token(refreshToken);
+            console.log(tokens);
+            return tokens;
     }
 }
 

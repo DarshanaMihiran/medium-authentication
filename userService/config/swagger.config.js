@@ -7,6 +7,20 @@ const options = {
       version: '1.0.0',
       description: 'This is the user service',
     },
+    components: {
+      securitySchemes: {
+          bearerAuth: {
+              type: 'http',
+              scheme: 'bearer',
+              bearerFormat: 'JWT',
+          },
+      },
+    },
+    security: [
+        {
+            bearerAuth: [],
+        },
+    ],
   },
   apis: ['./routes/*.js'], // Path to the API routes
 };

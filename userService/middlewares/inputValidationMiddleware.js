@@ -6,14 +6,17 @@ function validateIdQuery(req, res, next) {
     next();
 }
 
-function validateGetWithFiltersQuery(req, res, next) {
-    // if (!req.query.director || typeof req.query.director !== 'string') {
-    //     return res.status(400).json({ error: 'Invalid director query' });
-    // }
-    next(); // Proceed to the next middleware
+function validateLoginParameters(req, res, next) {
+    const username = req.body.username;
+    const password = req.body.password;
+    console.log(username, password);
+    if (!username || !password) {
+        return res.status(403).json({ error: 'Invalid Credentials' });
+    }
+    next();
 }
 
 module.exports = {
     validateIdQuery,
-    validateGetWithFiltersQuery
+    validateLoginParameters
 };
