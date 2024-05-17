@@ -1,5 +1,4 @@
-# medium-authentication
-# Movie and User Management Services
+# [medium-authentication] Movie and User Management Services
 
 This project is a Node.js application that provides APIs for managing movies and users. It includes functionalities such as filtering, sorting, pagination, and authentication/authorization.
 
