@@ -1,24 +1,26 @@
 const express = require('express');
 const app = express();
 const { connectDatabase } = require('./config/database.config');
-const routes = require('./config/route.config');
+const routes = require('./routes/route.config');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./config/swagger.config'); 
 const errorHandler = require('./middlewares/exceptionMiddleware');
 const { insertInitialData } = require('./utils/seedData')
+const configureMiddleware = require('./serviceRegistration/middleware.registration');
+require('./serviceRegistration/env.registration');
 
 const port = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.json());
+// Configure Middleware
+configureMiddleware(app);
 
+// Configure Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
-app.use(express.json());
+
+// Configure routes
 app.use(routes);
-app.use(errorHandler);
 
 const environment = process.env.NODE_ENV || 'development';
-console.log('env: ' + process.env.NODE_ENV);
 require('dotenv').config({ path: `./env/env.${environment}` });
 
 //Start server and connect to database

@@ -1,28 +1,17 @@
 const Movie = require('../models/movieModel');
+const {DatabaseException,NotFoundException} = require('../utils/customErrors');
 
 class MovieRepo {
     async getById(id) {
-        return await Movie.find({_id : id}).populate("similarBestMovie");
+        const movie = await Movie.find({_id : id}).populate("similarBestMovie");
+        if(!movie) throw new NotFoundException("Movie");
+        return movie;
     }
 
     async getAllMovies(query) {
-        // await Movie.create({
-        //     title: "Inception Dare",
-        //     year: 2010,
-        //     genre: ["Action", "Adventure", "Sci-Fi"],
-        //     director: "Christopher Nolan",
-        //     rating: 9.3,
-        //     createdAt: "2024-05-12T08:00:00.000Z",
-        //     updatedAt: "2024-05-12T08:00:00.000Z",
-        //     similarBestMovie: "60a3b7393d4dcd001c8f4468",
-        //     scores: {
-        //     IMDb: 8.8,
-        //     Metacritic: 74,
-        //     RottenTomatoes: 87
-        //     },
-        //     mainActors: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"]
-        // })
-        return await Movie.find(query).populate("similarBestMovie");
+        const movies = await Movie.find(query).populate("similarBestMovie");
+        if(!movies) throw new NotFoundException("Movie");
+        return movies;
     }
 
     async get(filters, sort, order, page, limit) {
@@ -48,9 +37,10 @@ class MovieRepo {
                 .sort(sortQuery)
                 .skip((page - 1) * limit)
                 .limit(limit);
+            if(!movies) throw new NotFoundException("Movie");
             return movies;
         } catch (error) {
-            throw new Error('Failed to fetch movies');
+            throw new DatabaseException(`Error retrieving movies: ${error.message}}`);
         }
     }
 
@@ -60,7 +50,7 @@ class MovieRepo {
             await movie.save();
             return movie;
         } catch (error) {
-            throw new Error(`Error creating movie: ${error.message}`);
+            throw new DatabaseException(`Error creating movie: ${error.message}`);
         }
     }
 }

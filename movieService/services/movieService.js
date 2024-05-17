@@ -10,23 +10,17 @@ class MovieService {
     }
 
     async createMovie(title, year, genre, director, rating, similarBestMovie, scores, mainActors) {
-        try {         
-            // Call the repository to create the movie
-            console.log(year);
-            const createdMovie = await movieRepo.create({
-                title,
-                year,
-                genre,
-                director,
-                rating,
-                similarBestMovie,
-                scores,
-                mainActors
-            });
-            return createdMovie;
-        } catch (error) {
-            throw new Error(`Error creating movie: ${error.message}`);
-        }
+        const createdMovie = await movieRepo.create({
+            title,
+            year,
+            genre,
+            director,
+            rating,
+            similarBestMovie,
+            scores,
+            mainActors
+        });
+        return createdMovie;
     }
 }
 

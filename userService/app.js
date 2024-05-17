@@ -6,12 +6,13 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./config/swagger.config');
 const { insertInitialData } = require('./utils/seedData')
 const routes = require('./routes/route.config')
+require('./serviceRegistration/env.registration');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Configure Middleware
- configureMiddleware(app);
+configureMiddleware(app);
 
 // Configure Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));

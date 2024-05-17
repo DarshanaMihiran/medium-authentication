@@ -1,6 +1,6 @@
 const { connectDatabase } = require('../config/database.config');
 const Movie = require('../models/movieModel');
-const {movies} = require('../config/movies.json');
+const {movies} = require('./movies.json');
 
 const environment = process.env.NODE_ENV || 'dev';
 require('dotenv').config({ path: `./env/env.${environment}` });
